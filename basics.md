@@ -178,6 +178,43 @@ print1();
 ```
 ([Link na CodePen](https://codepen.io/anon/pen/xoqorB?editors=0011))
 
+## Closure unutar `for` petlje
+
+Closure funkcije su moćan alat u funkcionalnom programiranju, ali postoje (rijetki) slučajevi gdje closure funkcije rade na način koji se na prvu ruku čini ne-intuitivnim.
+
+Sljedeći kôd u svakoj iteraciji `for` petlje stvara closure funkciju koja ispisuje vrijednost od `i` i sprema je u `closures` array. Nakon što se petlja izvrti poziva se svaki od spremljenih closure-a:
+```javascript
+var closures = [];
+for (var i = 0; i < 3; i++) {
+  closures.push(() => console.log(i));
+}
+
+closures.forEach(closure => closure());
+```
+Očekivali bi da ovo u konzolu ispiše:
+```
+0
+1
+2
+```
+ali zapravo će ispisati `3` tri puta. ([Link na CodePen](https://codepen.io/anon/pen/bPqXdM?editors=0011))
+
+Razlog je što closure nije samo funkcija, već funkcija i scope u kojem se nalazi. U ovom slučaju sve tri funkcije dijele isti scope (u ovom slučaju globalni) unutar kojeg je definirana varijabla `i`. Kako se petlja već izvrtila u trenutku poziva, vrijednost od `i` je 3 i to je ono što sve funkcije ispisuju u konzolu.
+
+Srećom, ovo možemo lako popraviti ako koristimo ES6 `let` umjesto `var`:
+```javascript
+var closures = [];
+for (let i = 0; i < 3; i++) {
+  closures.push(() => console.log(i));
+}
+
+closures.forEach(closure => closure());
+```
+([Link na CodePen](https://codepen.io/anon/pen/dBvxYp?editors=0011))
+
+Ovo radi kako bi očekivali jer je `i` varijabla definirana sa `let` *block scoped* unutar `for` petlje pa je svaki closure vezan na svoju `i` varijablu.
+
+
 # Stvaranje objekata u JavaScriptu
 
 Postoji veliki broj različitih načina stvaranja objekata u JavaScriptu, što može biti zbunjujuće za početnike i one koji dolaze iz više objektno orijentiranih programskih jezika poput Jave ili C#. Ovdje su navedena tri načina i razlozi zašto u Adriatic.hr-u preferiramo zadnji :)
