@@ -16,12 +16,15 @@ Sljedeći kôd će u strict modu javiti grešku:
 "use strict";
 console.log(foo); // ReferenceError: foo is not defined
 ```
+
 Ali ako varijablu foo definiramo nakon korištenja:
 ```javascript
 "use strict";
 console.log(foo); // undefined
 var foo = 5;
 ```
+([Link na CodePen](https://codepen.io/anon/pen/YoZoYX?editors=0011))
+
 Ovo je zato jer gornji kôd JavaScript implicitno razumije kao:
 ```javascript
 "use strict";
@@ -37,12 +40,14 @@ if (true) {
 }
 console.log(foo); // ReferenceError: foo is not defined
 ```
+([Link na CodePen](https://codepen.io/anon/pen/gNmNvL?editors=0010#0), greška se vidi u browser konzoli)
 ```javascript
 for (let i = 1; i <= 3; i++) {
   console.log(i); // 1, 2, 3 redom
 }
 console.log(i); // ReferenceError: i is not defined
 ```
+([Link na CodePen](https://codepen.io/anon/pen/NZpZya?editors=0011), greška se vidi u browser konzoli)
 
 # Funkcije u JavaScriptu
 
@@ -55,6 +60,8 @@ Razlikujemo nekoliko načina definiranja funkcija:
     console.log('can be called before declaration');
   }
   ```
+  ([Link na CodePen](https://codepen.io/anon/pen/JQWQpQ?editors=0011))
+
 * **Function expression**: spremanje funkcije u varijablu
   * definicija funkcije nije hoist-ana, samo naziv varijable
   * ne može se koristiti prije deklaracije
@@ -64,11 +71,14 @@ Razlikujemo nekoliko načina definiranja funkcija:
     console.log('can\'t be called before declaration');
   }
   ```
+  ([Link na CodePen](https://codepen.io/anon/pen/BgWgrR?editors=0011), greška se vidi u browser konzoli)
+
 * **Function constructor** - funkcije definirane na ovaj način imaju pristup samo varijablama iz *globalnog scope-a*, ne iz parent scope-a. ***Ne preporučuje se** korištenje ovog načina iz security i performance razloga*
   ```javascript
   var adder = new Function('a', 'b', 'return a + b');
   console.log(adder(2, 3)); // 5
   ```
+  ([Link na CodePen](https://codepen.io/anon/pen/agJgYx?editors=0011))
 
 ## Arrow funkcije
 
@@ -110,6 +120,7 @@ button.addEventListener('click', () => {
   console.log('this je ', this); // Window objekt ili undefined
 });
 ```
+([Link na CodePen](https://codepen.io/anon/pen/bPqPMr?editors=0011))
 
 ## Closures
 
@@ -127,6 +138,7 @@ greet(); // Hello Ana Anić
 name = 'Mate Matić';
 greet(); // Hello Mate Matić
 ```
+([Link na CodePen](https://codepen.io/anon/pen/mZWZqP?editors=0011))
 
 Ugniježdena funkcija *vidi* varijable iz njenog parent scope-a i parent scope-a funkcija koje ju sadrže:
 ```javascript
@@ -146,8 +158,9 @@ punctuationMark = '?';
 greetWorld(); // Hello world?
 greetMary(); // Hello Mary Lou?
 ```
+([Link na CodePen](https://codepen.io/anon/pen/mZWZBP?editors=0011))
 
-Što će sljedeći kôd ispisati u konzolu?
+**Vježba** Što će sljedeći kôd ispisati u konzolu?
 ```javascript
 var foo = 1;
 function print1() {
@@ -160,14 +173,17 @@ function print1() {
   }
 }
 
+console.log('foo je', foo);
 print1();
 ```
+([Link na CodePen](https://codepen.io/anon/pen/xoqorB?editors=0011))
 
 # Stvaranje objekata u JavaScriptu
 
-Postoji veliki broj različitih načina stvaranja objekata u JavaScriptu, što može biti zbunjujuće za početnike i one koji dolaze iz više objektno orijentiranih programskih jezika. Ovdje su navedena tri načina i razlozi zašto u Adriatic.hr-u preferiramo zadnji :)
+Postoji veliki broj različitih načina stvaranja objekata u JavaScriptu, što može biti zbunjujuće za početnike i one koji dolaze iz više objektno orijentiranih programskih jezika poput Jave ili C#. Ovdje su navedena tri načina i razlozi zašto u Adriatic.hr-u preferiramo zadnji :)
 
 ## 1. Koristeći funkcije, `new` keyword i prototype
+
 ```javascript
 function Person(name, surname) {
   this.name = name;
@@ -185,12 +201,14 @@ Person.prototype.introduce = function() {
 const a = new Person('Mate', 'Matić');
 a.introduce(); // Mate Matić
 ```
+([Link na CodePen](https://codepen.io/anon/pen/PrprWz?editors=0011))
+
 Svaki property na ovako stvorenom objektu je javan.
 
 ## 2. Klase
 
 * uvedene u [EcmaScript 6](http://es6-features.org/#ClassDefinition)
-* *syntax sugar* za gornji način
+* [syntactic sugar](https://en.wikipedia.org/wiki/Syntactic_sugar) za *prototype-based* nasljeđivanje iz prošlog poglavlja
 * [za sada](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Field_declarations) nema privatne metode i property-je
 
 ```javascript
@@ -221,11 +239,11 @@ button.addEventListener('click', mate.introduce);
 // Da bi ovo radilo, moramo na introduce funkciju bind-ati objekt 
 button.addEventListener('click', mate.introduce.bind(mate)); 
 ```
+([Link na CodePen](https://codepen.io/anon/pen/rEygRp?editors=0011))
 
 ## 3. Object factories
 
-* koristimo moć closure funkcija
-
+Koristimo moć closure funkcija. Primjer:
 
 ```javascript
 function createPerson(name, surname) {
@@ -249,6 +267,8 @@ document.body.appendChild(button);
 // Ovo radi
 button.addEventListener('click', ante.introduce); 
 ```
+([Link na CodePen](https://codepen.io/anon/pen/KjWLba?editors=0011))
+
 Prednosti:
 * imamo privatne metode
 * nema `this` komplikacija
