@@ -15,6 +15,8 @@ const loudPets = pets.map(pet => pet.toUpperCase());
 console.log(loudPets);
 ```
 
+([Link na CodePen](https://codepen.io/anon/pen/ydXprW?editors=0011))
+
 Za usporedbu, ista operacija koristeći `for` petlju:
 
 ```javascript
@@ -25,6 +27,8 @@ for (let i = 0; i < pets.length; i++) {
 }
 console.log(loudPets);
 ```
+
+([Link na CodePen](https://codepen.io/anon/pen/gNRoJv?editors=0011))
 
 Prednosti:
 
@@ -56,6 +60,8 @@ const cats = pets.filter(pet => pet.type === 'cat');
 console.log(cats);
 ```
 
+([Link na CodePen](https://codepen.io/anon/pen/XLgVLJ?editors=0011))
+
 Implementacija iste funkcionalnosti koristeći `for` petlju:
 
 ```javascript
@@ -73,6 +79,8 @@ for (let i = 0; i < pets.length; i++) {
 }
 console.log(cats);
 ```
+
+([Link na CodePen](https://codepen.io/anon/pen/YoQYoQ?editors=0011))
 
 Novi array ima samo one elemente za koje test funkcija vraća `true`.
 
@@ -111,10 +119,12 @@ const sumOfNumbers = numbers.reduce(
 console.log(sumOfNumbers); // 15
 ```
 
+([Link na CodePen](https://codepen.io/anon/pen/NZgXZO?editors=0011))
+
 ## Primjer 2. Implementacije `map()` i `filter()` metoda
 
-`reduce()` je vrlo moćan alat s kojim možemo napraviti i našu implementaciju
-`map()` i `filter()` metoda.
+`reduce()` je moćan alat s kojim možemo napraviti i naše implementacije `map()`
+i `filter()` metoda.
 
 ### Map
 
@@ -130,6 +140,8 @@ const loudPets = map(pets, value => value.toUpperCase());
 
 console.log(loudPets);
 ```
+
+([Link na CodePen](https://codepen.io/anon/pen/ewRyqY?editors=0011))
 
 ### Filter
 
@@ -152,6 +164,8 @@ const cats = filter(pets, pet => pet.type === 'cat');
 console.log(cats);
 ```
 
+([Link na CodePen](https://codepen.io/anon/pen/qzjpeq?editors=0011))
+
 ## Primjer 3. Uklanjanje duplikata iz array-a
 
 ```javascript
@@ -164,6 +178,8 @@ const oneOfEachPet = pets.reduce((accumulator, pet) => {
 }, []);
 console.log(oneOfEachPet);
 ```
+
+([Link na CodePen](https://codepen.io/anon/pen/BgZJXP?editors=0011))
 
 # Currying
 
@@ -205,12 +221,16 @@ console.log(add(5, 3));
 console.log(curriedAdd(5)(3));
 ```
 
+([Link na CodePen](https://codepen.io/anon/pen/rEwJBa?editors=0011))
+
 Funkcija `curriedAdd()` se može kraće napisati koristeći arrow funkcije:
 
 ```javascript
 const curriedAdd = a => b => a + b;
 console.log(curriedAdd(5)(3));
 ```
+
+([Link na CodePen](https://codepen.io/anon/pen/orwEvZ?editors=0011))
 
 ## Zašto koristiti currying?
 
@@ -231,6 +251,8 @@ const direwolfs = pets.filter(isType('direwolf'));
 console.log('cats', cats);
 console.log('direwolfs', direwolfs);
 ```
+
+([Link na CodePen](https://codepen.io/anon/pen/agwqbN?editors=0011))
 
 # Dependency injection (sa funkcijama)
 
