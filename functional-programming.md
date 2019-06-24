@@ -174,11 +174,15 @@ rezultat ako se radi o funkciji sa dva argumenta), itd...
 
 Na primjer, gdje običnu `add` funkciju pozivamo ovako:
 
+<!-- eslint-disable no-undef -->
+
 ```javascript
 add(1, 2, 3);
 ```
 
 _curried_ verzija bi se pozivala ovako:
+
+<!-- eslint-disable no-undef -->
 
 ```javascript
 add(1)(2)(3);
@@ -255,7 +259,7 @@ function getUserName(id) {
   return $.get(`https://www.example.com/users/${id}`).then(user => user.name);
 }
 
-getUserName(id);
+getUserName(42);
 ```
 
 Gornji primjer nije testabilan, jer u unit testovima ne želimo zaista vršiti
@@ -267,7 +271,7 @@ function getUserName($get, id) {
   return $get(`https://www.example.com/users/${id}`).then(user => user.name);
 }
 
-getUserName($.get, id);
+getUserName($.get, 42);
 ```
 
 Unit test sada može funkciji `getUserName()` dati svoju implementaciju `$.get`
@@ -283,7 +287,7 @@ parametrom:
 export default function makeGetUserName($get) {
   // Prvi argument bind funkcije definira vrijednost od this (nije bitan jer ga
   // getUserName() ne koristi)
-  return getUserName.bind(null, $.get);
+  return getUserName.bind(null, $get);
 }
 
 // Ovu funkciju koristimo u testovima

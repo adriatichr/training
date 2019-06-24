@@ -20,12 +20,17 @@ inicijalizaciju) varijable ili funkcije na vrh _scope_-a koji ih sadrži
 
 Sljedeći kôd će u strict modu javiti grešku:
 
+<!-- eslint-disable no-undef -->
+
 ```javascript
 'use strict';
 console.log(foo); // ReferenceError: foo is not defined
 ```
 
 Ali ako varijablu foo definiramo nakon korištenja:
+
+<!-- eslint-disable no-var -->
+<!-- eslint-disable no-use-before-define -->
 
 ```javascript
 'use strict';
@@ -37,6 +42,8 @@ var foo = 5;
 
 Ovo je zato jer gornji kôd JavaScript implicitno razumije kao:
 
+<!-- eslint-disable no-var -->
+
 ```javascript
 'use strict';
 var foo; // deklaracija foo podignuta na vrh njenog scope-a
@@ -45,6 +52,9 @@ foo = 5;
 ```
 
 Block scope:
+
+<!-- eslint-disable no-unused-vars -->
+<!-- eslint-disable no-undef -->
 
 ```javascript
 if (true) {
@@ -55,6 +65,8 @@ console.log(foo); // ReferenceError: foo is not defined
 
 ([Link na CodePen](https://codepen.io/anon/pen/gNmNvL?editors=0010#0), greška se
 vidi u browser konzoli)
+
+<!-- eslint-disable no-undef -->
 
 ```javascript
 for (let i = 1; i <= 3; i++) {
@@ -86,6 +98,9 @@ Razlikujemo nekoliko načina definiranja funkcija:
   - definicija funkcije nije hoist-ana, samo naziv varijable
   - ne može se koristiti prije deklaracije
 
+  <!-- eslint-disable no-var -->
+  <!-- eslint-disable no-use-before-define -->
+
   ```javascript
   bar(); // TypeError: bar is not a function
   var bar = function() {
@@ -97,12 +112,16 @@ Razlikujemo nekoliko načina definiranja funkcija:
   vidi u browser konzoli)
 
 - **Function constructor** - funkcije definirane na ovaj način imaju pristup
-  samo varijablama iz _globalnog scope-a_, ne iz parent scope-a. **\*Ne
-  preporučuje se** korištenje ovog načina iz security i performance razloga\*
+  samo varijablama iz _globalnog scope-a_, ne iz parent scope-a. **Ne
+  preporučuje se** korištenje ovog načina iz security i performance razloga
+
+  <!-- eslint-disable no-new-func -->
+
   ```javascript
-  var adder = new Function('a', 'b', 'return a + b');
+  const adder = new Function('a', 'b', 'return a + b');
   console.log(adder(2, 3)); // 5
   ```
+
   ([Link na CodePen](https://codepen.io/anon/pen/agJgYx?editors=0011))
 
 ## Arrow funkcije
@@ -118,6 +137,8 @@ Novi način definiranja funkcija uveden u
 Primjeri sintakse:
 
 <!-- prettier-ignore-start -->
+<!-- eslint-disable no-unused-expressions -->
+<!-- eslint-disable no-unused-vars -->
 ```javascript
 (param1, param2, param3) => { console.log(param1, param2, param3) };
 
@@ -204,14 +225,18 @@ greetMary(); // Hello Mary Lou?
 
 **Vježba** Što će sljedeći kôd ispisati u konzolu?
 
+<!-- eslint-disable no-shadow -->
+<!-- eslint-disable prefer-const -->
+<!-- eslint-disable no-unused-vars -->
+
 ```javascript
-var foo = 1;
+let foo = 1;
 function print1() {
-  var foo = 2;
+  let foo = 2;
   print2();
 
   function print2() {
-    var foo = 3;
+    let foo = 3;
     console.log('foo je', foo);
   }
 }
@@ -231,6 +256,9 @@ Closure funkcije su moćan alat u funkcionalnom programiranju, ali postoje
 Sljedeći kôd u svakoj iteraciji `for` petlje stvara closure funkciju koja
 ispisuje vrijednost od `i` i sprema je u `closures` array. Nakon što se petlja
 izvrti poziva se svaki od spremljenih closure-a:
+
+<!-- eslint-disable no-var -->
+<!-- eslint-disable no-loop-func -->
 
 ```javascript
 var closures = [];
@@ -261,7 +289,7 @@ u konzolu.
 Srećom, ovo možemo lako popraviti ako koristimo ES6 `let` umjesto `var`:
 
 ```javascript
-var closures = [];
+const closures = [];
 for (let i = 0; i < 3; i++) {
   closures.push(() => console.log(i));
 }
