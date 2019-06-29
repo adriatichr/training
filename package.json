@@ -18,6 +18,7 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-markdown": "^1.0.0",
     "eslint-plugin-react": "^7.11.0",
+    "husky": "^2.7.0",
     "prettier": "1.18.2"
   },
   "prettier": {
@@ -36,5 +37,11 @@
     "tabWidth": 2,
     "trailingComma": "all",
     "useTabs": false
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm t",
+      "pre-push": "npm t"
+    }
   }
 }
